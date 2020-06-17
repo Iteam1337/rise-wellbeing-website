@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.0.0-rc.5",
+    "@reach/accordion": "^0.10.4",
+    "@reach/tabs": "^0.10.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -10,12 +13,18 @@
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.37",
     "@types/react-dom": "^16.9.8",
+    "graphql": "^15.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "tailwindcss": "^1.4.6",
+    "typescript": "^3.9.5"
   },
   "scripts": {
+    "build:styles": "tailwindcss build src/src.css -o src/tailwind.css",
+    "apollo:schema": "apollo-codegen introspect-schema http://localhost:4000/graphql --output schema.json",
+    "apollo:generate": "graphql-codegen",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -35,5 +44,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.15.3",
+    "@graphql-codegen/typescript-resolvers": "^1.15.3",
+    "@types/react-router-dom": "^5.1.5",
+    "apollo-codegen": "^0.20.2",
+    "graphql-cli": "^4.0.0"
   }
 }
