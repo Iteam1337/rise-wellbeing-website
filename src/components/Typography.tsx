@@ -13,5 +13,9 @@ export const H2 = ({ children }: HeadingProps) => (
 );
 
 export const H3 = ({ children }: HeadingProps) => (
-  <h3 className="font-title text-xl md:text-2xl"> {children} </h3>
+  <h3 className="text-xl font-title md:text-2xl"> {children} </h3>
+);
+
+export const H4 = ({ children }: HeadingProps) => (
+  <h4 className="font-title text-lg md:text-xl"> {children} </h4>
 );

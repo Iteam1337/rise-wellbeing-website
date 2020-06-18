@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Column, Center, BackgroundColor, Spacing } from "./Layout";
+import {
+  Container,
+  Column,
+  Center,
+  BackgroundColor,
+  Spacing,
+  Wrapper,
+} from "./Layout";
 import { H2, H3 } from "./Typography";
 
 import { Query } from "../api.g";
@@ -35,10 +42,17 @@ function CategoriesFeed() {
             return (
               <Container key={category.label}>
                 <Center>
-                  <img src={category.label} alt={category.label} />
-                  <Link to={`/tema/${category.label}`}>
-                    <H3>{category.label}</H3>
-                  </Link>
+                  <Column gap={Spacing.XS}>
+                    <Link to={`/tema/${category.label}`}>
+                      <img
+                        src="https://picsum.photos/640/480"
+                        alt={category.label}
+                      />
+                    </Link>
+                    <Link to={`/tema/${category.label}`}>
+                      <H3>{category.label}</H3>
+                    </Link>
+                  </Column>
                 </Center>
               </Container>
             );
@@ -50,9 +64,11 @@ function CategoriesFeed() {
 
   if (elementToRender) {
     return (
-      <Container backgroundColor={BackgroundColor.Beige} spacing={Spacing.S}>
-        <Center>{elementToRender}</Center>
-      </Container>
+      <Wrapper backgroundColor={BackgroundColor.Beige}>
+        <Container spacing={Spacing.S}>
+          <Center>{elementToRender}</Center>
+        </Container>
+      </Wrapper>
     );
   } else {
     return null;

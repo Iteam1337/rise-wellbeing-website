@@ -2,6 +2,7 @@ import React from "react";
 
 export enum Spacing {
   None = "none",
+  XS = "xsmall",
   S = "small",
   M = "medium",
   L = "large",
@@ -10,45 +11,68 @@ export enum Spacing {
 const spacingToTailwindProps = (spacing: Spacing): string => {
   const mapper = {
     none: "p-0",
+    xsmall: "p-2 md:p-4",
     small: "p-4 md:p-6",
     medium: "p-8 md:p-12",
     large: "p-12 md:p-16",
   };
 
-  return mapper?.[spacing] || mapper.none;
+  return mapper[spacing] || mapper.none;
 };
 
 export enum BackgroundColor {
   Beige = "beige",
+  DarkBeige = "beige-dark",
   Transparent = "transparent",
+  White = "white",
 }
 
 const backgroundColorToTailwindProps = (
   backgroundColor: BackgroundColor
 ): string => {
   const mapper = {
+    white: "bg-white",
     transparent: "bg-transparent",
+    "beige-dark": "bg-beige-dark",
     beige: "bg-beige",
   };
 
-  return mapper?.[backgroundColor] || mapper.transparent;
+  return mapper[backgroundColor] || mapper.transparent;
 };
 
 export type ContainerProps = {
-  backgroundColor?: BackgroundColor;
   spacing?: Spacing;
   children: JSX.Element[] | JSX.Element;
 };
 
 export const Container = ({
-  backgroundColor = BackgroundColor.Transparent,
   spacing = Spacing.None,
   children,
 }: ContainerProps) => (
   <div
-    className={`container mx-auto ${spacingToTailwindProps(
+    className={`container w-full mx-auto ${spacingToTailwindProps(spacing)}`}
+  >
+    {children}
+  </div>
+);
+
+export type WrapperProps = {
+  classNames?: string;
+  backgroundColor?: BackgroundColor;
+  spacing?: Spacing;
+  children: JSX.Element[] | JSX.Element;
+};
+
+export const Wrapper = ({
+  classNames = "",
+  backgroundColor = BackgroundColor.Transparent,
+  spacing = Spacing.None,
+  children,
+}: WrapperProps) => (
+  <div
+    className={`w-full mx-auto ${spacingToTailwindProps(
       spacing
-    )} ${backgroundColorToTailwindProps(backgroundColor)}`}
+    )} ${backgroundColorToTailwindProps(backgroundColor)} ${classNames}`}
   >
     {children}
   </div>
@@ -57,12 +81,13 @@ export const Container = ({
 const gapToTailwindProps = (spacing: Spacing): string => {
   const mapper = {
     none: "gap-0",
-    small: "gap-4",
-    medium: "gap-8",
-    large: "gapp-12",
+    xsmall: "gap-2 md:gap-4",
+    small: "gap-4 md:gap-6",
+    medium: "gap-8 md:gap-10",
+    large: "gap-12 md:gap-14",
   };
 
-  return mapper?.[spacing] || mapper.none;
+  return mapper[spacing] || mapper.none;
 };
 
 export type ColumnProps = {

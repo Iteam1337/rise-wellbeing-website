@@ -6,7 +6,9 @@ module.exports = {
         title: ["Viga", "sans-serif"],
       },
       colors: {
-        beige: "#FFFDF6",
+        razzmatazz: "#E1056D",
+        "beige-dark": "#F5F3EA",
+        beige: "#FFFDF7",
       },
     },
   },

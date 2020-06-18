@@ -3,18 +3,21 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Category from "./Category";
 import CategoriesFeed from "./components/CategoriesFeed";
 import { ArticleThumbnail } from "./components/Article";
-import { Container, Column, Spacing } from "./components/Layout";
+import { Column, Spacing } from "./components/Layout";
+import { Footer } from "./components/Footer";
+import { Logo } from "./components/Logo";
 
 function App() {
   return (
-    <Container>
+    <>
       <Router>
+        <Logo />
         <Switch>
           <Route path="/tema/:category">
             <Category />
           </Route>
           <Route path="/">
-            <Column gap={Spacing.M}>
+            <Column gap={Spacing.S}>
               <ArticleThumbnail
                 title="Välkommen!"
                 text="Text som lockar användaren att spela filmklippet om plattformen."
@@ -28,7 +31,8 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Container>
+      <Footer />
+    </>
   );
 }
 
