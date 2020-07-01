@@ -9,7 +9,7 @@ import {
 } from "./Layout";
 import regionSthlmLogo from "../assets/region_sthlm.svg";
 
-export const Footer = () => (
+const Footer = () => (
   <Wrapper
     backgroundColor={BackgroundColor.White}
     classNames="border-razzmatazz border-t-8"
@@ -42,3 +42,5 @@ export const Footer = () => (
     </Container>
   </Wrapper>
 );
+
+export default Footer;

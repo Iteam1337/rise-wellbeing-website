@@ -8,15 +8,15 @@ import {
   AccordionPanel,
 } from "@reach/accordion";
 import "@reach/accordion/styles.css";
-import { H2, H4 } from "./components/Typography";
+import { H2, H4 } from "../components/Typography";
 import {
   Column,
   Container,
   Wrapper,
   Spacing,
   BackgroundColor,
-} from "./components/Layout";
-import { themeColors } from "./constants";
+} from "../components/Layout";
+import { themeColors } from "../constants";
 // import { Query } from "./api.g";
 // import { CATEGORY_QUERY } from "./graphql/queries";
 // import { useQuery } from "@apollo/client";

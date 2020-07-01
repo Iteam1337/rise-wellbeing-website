@@ -11,7 +11,7 @@ body,
 }
 
 body {
-  @apply bg-beige-dark;
+  @apply bg-beige-dark font-body text-base text-black;
 }
 
 /* Custom Tailwind */

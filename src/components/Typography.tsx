@@ -17,5 +17,18 @@ export const H3 = ({ children }: HeadingProps) => (
 );
 
 export const H4 = ({ children }: HeadingProps) => (
-  <h4 className="font-title text-lg md:text-xl"> {children} </h4>
+  <h4 className="text-lg font-title md:text-xl"> {children} </h4>
+);
+
+export const Leading = ({ children }: HeadingProps) => (
+  <p className="pb-6 text-base font-bold font-body md:text-lg md:pb-8">
+    {" "}
+    {children}{" "}
+  </p>
+);
+
+export const Strong = ({ children }: HeadingProps) => (
+  <span className="inline-block pb-6 text-base font-bold font-body md:text-lg md:pb-8">
+    {children}
+  </span>
 );

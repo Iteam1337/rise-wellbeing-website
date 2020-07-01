@@ -10,3 +10,16 @@ export const CATEGORIES_QUERY = gql`
     }
   }
 `;
+
+export const ARTICLES_QUERY = gql`
+  query Articles {
+    articles {
+      url
+      imgUrl
+      videoUrl
+      title
+      text
+      introduction
+    }
+  }
+`;

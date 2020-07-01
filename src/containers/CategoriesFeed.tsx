@@ -7,8 +7,8 @@ import {
   BackgroundColor,
   Spacing,
   Wrapper,
-} from "./Layout";
-import { H2, H3 } from "./Typography";
+} from "../components/Layout";
+import { H2, H4, Leading } from "../components/Typography";
 
 import { Query } from "../api.g";
 import { CATEGORIES_QUERY } from "../graphql/queries";
@@ -33,10 +33,10 @@ function CategoriesFeed() {
     elementToRender = (
       <Column>
         <H2>Utforska</H2>
-        <p>
+        <Leading>
           Ingress som kortfattat beskriver vad användaren kan hitta under de
           olika temana som presenteras nedanför.
-        </p>
+        </Leading>
         <Column cols={2} colsDesktop={4}>
           {data.categories.map((category) => {
             return (
@@ -50,7 +50,9 @@ function CategoriesFeed() {
                       />
                     </Link>
                     <Link to={`/tema/${category.label}`}>
-                      <H3>{category.label}</H3>
+                      <H4>
+                        <span className="uppercase">{category.label}</span>
+                      </H4>
                     </Link>
                   </Column>
                 </Center>

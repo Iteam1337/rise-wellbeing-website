@@ -17,7 +17,7 @@ export type Query = {
   _empty?: Maybe<Scalars['String']>;
   questions: Array<Question>;
   categories: Array<Category>;
-  services: Array<Service>;
+  articles: Array<Article>;
 };
 
 export type Question = {
@@ -34,23 +34,39 @@ export type Category = {
   information: Scalars['String'];
 };
 
-export type Service = {
-  __typename?: 'Service';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  link: Scalars['String'];
+export type Article = {
+  __typename?: 'Article';
+  title: Scalars['String'];
+  type: Scalars['String'];
+  url: Scalars['String'];
+  videoUrl: Scalars['String'];
+  imgUrl: Scalars['String'];
   categories: Array<Category>;
+  introduction: Scalars['String'];
+  text: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
   sendAnswers: Scalars['Boolean'];
+  login: AuthPayload;
+  register: AuthPayload;
 };
 
 
 export type MutationSendAnswersArgs = {
   input: Answers;
+};
+
+
+export type MutationLoginArgs = {
+  input?: Maybe<UserInput>;
+};
+
+
+export type MutationRegisterArgs = {
+  input: UserInput;
 };
 
 export type Answers = {
@@ -62,9 +78,27 @@ export type Answer = {
   text: Scalars['String'];
 };
 
+export type UserInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type AuthPayload = {
+  __typename?: 'AuthPayload';
+  id: Scalars['ID'];
+  token: Scalars['String'];
+  email: Scalars['String'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   _empty?: Maybe<Scalars['String']>;
+};
+
+export type LogoutResponse = {
+  __typename?: 'LogoutResponse';
+  status: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export enum CacheControlScope {
@@ -155,12 +189,16 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Question: ResolverTypeWrapper<Question>;
   Category: ResolverTypeWrapper<Category>;
-  Service: ResolverTypeWrapper<Service>;
+  Article: ResolverTypeWrapper<Article>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Answers: Answers;
   Answer: Answer;
+  userInput: UserInput;
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Subscription: ResolverTypeWrapper<{}>;
+  LogoutResponse: ResolverTypeWrapper<LogoutResponse>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
 };
@@ -171,12 +209,16 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Question: Question;
   Category: Category;
-  Service: Service;
+  Article: Article;
   Mutation: {};
   Boolean: Scalars['Boolean'];
   Answers: Answers;
   Answer: Answer;
+  userInput: UserInput;
+  AuthPayload: AuthPayload;
+  ID: Scalars['ID'];
   Subscription: {};
+  LogoutResponse: LogoutResponse;
   Upload: Scalars['Upload'];
 };
 
@@ -184,7 +226,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   questions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
-  services?: Resolver<Array<ResolversTypes['Service']>, ParentType, ContextType>;
+  articles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType>;
 };
 
 export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = {
@@ -201,21 +243,40 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
-export type ServiceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Service'] = ResolversParentTypes['Service']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  link?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type ArticleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Article'] = ResolversParentTypes['Article']> = {
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  videoUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  imgUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  introduction?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sendAnswers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendAnswersArgs, 'input'>>;
+  login?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
+  register?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>;
+};
+
+export type AuthPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   _empty?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "_empty", ParentType, ContextType>;
+};
+
+export type LogoutResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['LogoutResponse'] = ResolversParentTypes['LogoutResponse']> = {
+  status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
@@ -226,9 +287,11 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Question?: QuestionResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
-  Service?: ServiceResolvers<ContextType>;
+  Article?: ArticleResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  AuthPayload?: AuthPayloadResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  LogoutResponse?: LogoutResponseResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 };
 

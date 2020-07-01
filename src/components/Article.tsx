@@ -1,4 +1,5 @@
 import React from "react";
+import { Markdown } from "./Markdown";
 import { H2 } from "./Typography";
 import { LinkButton } from "./Button";
 import {
@@ -11,20 +12,63 @@ import {
 } from "./Layout";
 
 export type ArticleProps = {
-  title: string;
+  image?: string;
   text: string;
+  title: string;
+  url: string;
+  video?: string;
 };
 
-export const ArticleThumbnail = ({ title, text }: ArticleProps) => (
-  <Wrapper backgroundColor={BackgroundColor.Beige} spacing={Spacing.S}>
-    <Container>
-      <Center>
-        <Column>
-          <H2>{title}</H2>
-          <p>{text}</p>
-          <LinkButton to="" text="Läs mer" />
+const getAttachedAsset = (
+  maybeImage?: string,
+  maybeVideo?: string
+): JSX.Element => {
+  let maybeAttachedAsset;
+
+  /* Lets just prioritise video's over images */
+  if (maybeVideo) {
+    maybeAttachedAsset = (
+      <video controls className="w-full h-auto">
+        <source src={maybeVideo} type="video/mp4" />
+        Sorry, your browser doesn't support embedded videos.
+      </video>
+    );
+  } else if (maybeImage) {
+    maybeAttachedAsset = (
+      <img className="w-full h-auto" src={maybeImage} alt="" />
+    );
+  } else {
+    maybeAttachedAsset = <React.Fragment />;
+  }
+
+  return maybeAttachedAsset;
+};
+
+export const ArticleThumbnail = ({
+  image,
+  text,
+  title,
+  url,
+  video,
+}: ArticleProps) => {
+  return (
+    <Wrapper backgroundColor={BackgroundColor.Beige} spacing={Spacing.None}>
+      <Container>
+        <Column gap={Spacing.None}>
+          <Container spacing={Spacing.S}>
+            <Center>
+              <H2>{title}</H2>
+            </Center>
+          </Container>
+          {getAttachedAsset(image, video)}
+          <Container spacing={Spacing.S}>
+            <Column>
+              <Markdown text={text} />
+              <LinkButton to={url} text="Läs mer" />
+            </Column>
+          </Container>
         </Column>
-      </Center>
-    </Container>
-  </Wrapper>
-);
+      </Container>
+    </Wrapper>
+  );
+};

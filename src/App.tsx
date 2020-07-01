@@ -1,31 +1,33 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Category from "./Category";
-import CategoriesFeed from "./components/CategoriesFeed";
-import { ArticleThumbnail } from "./components/Article";
+
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import { Column, Spacing } from "./components/Layout";
-import { Footer } from "./components/Footer";
-import { Logo } from "./components/Logo";
+
+import ArticlesFeed from "./containers/ArticlesFeed";
+import CategoriesFeed from "./containers/CategoriesFeed";
+import Category from "./containers/Category";
 
 function App() {
   return (
     <>
       <Router>
-        <Logo />
+        <Route exact path="/">
+          <Header />
+        </Route>
+
+        <Route path="/:any_subroute">
+          <Header shrink={true} />
+        </Route>
+
         <Switch>
           <Route path="/tema/:category">
             <Category />
           </Route>
           <Route path="/">
             <Column gap={Spacing.S}>
-              <ArticleThumbnail
-                title="Välkommen!"
-                text="Text som lockar användaren att spela filmklippet om plattformen."
-              />
-              <ArticleThumbnail
-                title="Vad är psykiskt välmående*?"
-                text="Kortare intro-text om vad psykisk hälsa är - psykoedukation - som också lockar användaren till att läsa mer. "
-              />
+              <ArticlesFeed />
               <CategoriesFeed />
             </Column>
           </Route>

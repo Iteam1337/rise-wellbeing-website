@@ -13,7 +13,7 @@ export type LinkButtonProps = ButtonProps & {
 
 export const LinkButton = ({ text, to }: LinkButtonProps) => (
   <Link
-    className="px-4 py-1 uppercase border-2 border-black rounded-sm rounded-tr-lg rounded-bl-lg font-title justify-self-center"
+    className="px-4 py-1 uppercase text-sm border-2 border-black rounded-sm rounded-tr-lg rounded-bl-lg font-title justify-self-center transition duration-200 hover:bg-black hover:text-white"
     title={text}
     to={to}
   >
