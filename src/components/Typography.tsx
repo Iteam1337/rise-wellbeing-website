@@ -22,13 +22,12 @@ export const H4 = ({ children }: HeadingProps) => (
 
 export const Leading = ({ children }: HeadingProps) => (
   <p className="pb-6 text-base font-bold font-body md:text-lg md:pb-8">
-    {" "}
-    {children}{" "}
+    {children}
   </p>
 );
 
 export const Strong = ({ children }: HeadingProps) => (
-  <span className="inline-block pb-6 text-base font-bold font-body md:text-lg md:pb-8">
+  <span className="inline-block text-base font-bold font-body md:text-lg">
     {children}
   </span>
 );

@@ -19,11 +19,17 @@ export type Query = {
   categories: Array<Category>;
   categoryAndRelated?: Maybe<Category>;
   articles: Array<Article>;
+  article: Article;
   services: Array<Service>;
 };
 
 
 export type QueryCategoryAndRelatedArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryArticleArgs = {
   id: Scalars['String'];
 };
 
@@ -39,6 +45,8 @@ export type Category = {
   label: Scalars['String'];
   introduction: Scalars['String'];
   information: Scalars['String'];
+  imageUrl: Scalars['String'];
+  thumbnailUrl: Scalars['String'];
   services?: Maybe<Array<Maybe<Service>>>;
 };
 
@@ -52,6 +60,7 @@ export type Service = {
 
 export type Article = {
   __typename?: 'Article';
+  id: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
   url: Scalars['String'];
@@ -122,6 +131,12 @@ export type AuthPayload = {
 export type Subscription = {
   __typename?: 'Subscription';
   _empty?: Maybe<Scalars['String']>;
+};
+
+export type Image = {
+  __typename?: 'Image';
+  thumbnailUrl: Scalars['String'];
+  imageUrl: Scalars['String'];
 };
 
 export type LogoutResponse = {
@@ -229,6 +244,7 @@ export type ResolversTypes = {
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Subscription: ResolverTypeWrapper<{}>;
+  Image: ResolverTypeWrapper<Image>;
   LogoutResponse: ResolverTypeWrapper<LogoutResponse>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
@@ -251,6 +267,7 @@ export type ResolversParentTypes = {
   AuthPayload: AuthPayload;
   ID: Scalars['ID'];
   Subscription: {};
+  Image: Image;
   LogoutResponse: LogoutResponse;
   Upload: Scalars['Upload'];
 };
@@ -261,6 +278,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   categoryAndRelated?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoryAndRelatedArgs, 'id'>>;
   articles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType>;
+  article?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<QueryArticleArgs, 'id'>>;
   services?: Resolver<Array<ResolversTypes['Service']>, ParentType, ContextType>;
 };
 
@@ -275,6 +293,8 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   introduction?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   information?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  imageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  thumbnailUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   services?: Resolver<Maybe<Array<Maybe<ResolversTypes['Service']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
@@ -288,6 +308,7 @@ export type ServiceResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type ArticleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Article'] = ResolversParentTypes['Article']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -324,6 +345,12 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
   _empty?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "_empty", ParentType, ContextType>;
 };
 
+export type ImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = {
+  thumbnailUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  imageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type LogoutResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['LogoutResponse'] = ResolversParentTypes['LogoutResponse']> = {
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -344,6 +371,7 @@ export type Resolvers<ContextType = any> = {
   latestAnswerResponse?: LatestAnswerResponseResolvers<ContextType>;
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  Image?: ImageResolvers<ContextType>;
   LogoutResponse?: LogoutResponseResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 };

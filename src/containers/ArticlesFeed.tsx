@@ -21,16 +21,39 @@ function ArticlesFeed() {
   }
 
   if (data) {
-    elementToRender = data.articles.map((article: Article) => (
-      <ArticleThumbnail
-        image={article.imgUrl}
-        key={article.title}
-        text={article.introduction}
-        title={article.title}
-        url={article.url}
-        video={article.videoUrl}
-      />
-    ));
+    /* TODO(@all): This should happen in the API */
+    const [welcomeArticle] = data.articles.filter((article) =>
+      article.title.startsWith("Välkommen")
+    );
+
+    const restOfArticles = data.articles.filter(
+      (article) => !article.title.startsWith("Välkommen")
+    );
+
+    elementToRender = (
+      <>
+        <ArticleThumbnail
+          image={welcomeArticle.imgUrl}
+          key={welcomeArticle.id}
+          text={welcomeArticle.introduction}
+          title={welcomeArticle.title}
+          id={welcomeArticle.id}
+          url={`/artikel/${welcomeArticle.id}`}
+          video={welcomeArticle.videoUrl}
+        />
+        {restOfArticles.map((article: Article) => (
+          <ArticleThumbnail
+            image={article.imgUrl}
+            key={article.id}
+            text={article.introduction}
+            title={article.title}
+            id={article.id}
+            url={`/artikel/${article.id}`}
+            video={article.videoUrl}
+          />
+        ))}
+      </>
+    );
   }
 
   if (elementToRender) {

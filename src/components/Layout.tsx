@@ -131,3 +131,11 @@ export const Center = ({
 }: {
   children: React.ReactChild[] | React.ReactChild;
 }) => <div className={`text-center justify-center`}>{children}</div>;
+
+export const Spacer = ({ spacing = Spacing.S }: { spacing?: Spacing }) => (
+  <span
+    className={`inline-block text-center justify-center ${spacingToTailwindProps(
+      spacing
+    )}`}
+  />
+);

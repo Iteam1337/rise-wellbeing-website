@@ -11,10 +11,14 @@ body,
 }
 
 body {
-  @apply bg-beige-dark font-body text-base text-black;
+  @apply text-base text-black bg-beige-dark font-body;
 }
 
 /* Custom Tailwind */
 .justify-self-center {
   justify-self: center;
+}
+
+.list-dp-icon {
+  background: url("./assets/list_style_icon.svg") no-repeat left top;
 }

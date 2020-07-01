@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import { Column, Spacing } from "./components/Layout";
 
 import ArticlesFeed from "./containers/ArticlesFeed";
+import Article from "./containers/Article";
 import CategoriesFeed from "./containers/CategoriesFeed";
 import Category from "./containers/Category";
 
@@ -22,6 +23,9 @@ function App() {
         </Route>
 
         <Switch>
+          <Route path="/artikel/:article">
+            <Article />
+          </Route>
           <Route path="/tema/:category">
             <Category />
           </Route>

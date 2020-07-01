@@ -45,7 +45,7 @@ function CategoriesFeed() {
                   <Column gap={Spacing.XS}>
                     <Link to={`/tema/${category.id}`}>
                       <img
-                        src="https://picsum.photos/640/480"
+                        src={`${process.env.REACT_APP_API_ENDPOINT}${category.thumbnailUrl}`}
                         alt={category.label}
                       />
                     </Link>

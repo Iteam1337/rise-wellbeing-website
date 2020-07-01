@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
+import { Markdown } from "../components/Markdown";
 import "@reach/tabs/styles.css";
 import {
   Accordion,
@@ -8,8 +9,9 @@ import {
   AccordionPanel,
 } from "@reach/accordion";
 import "@reach/accordion/styles.css";
-import { H2, H4 } from "../components/Typography";
+import { H2, H4, Strong } from "../components/Typography";
 import {
+  Center,
   Column,
   Container,
   Wrapper,
@@ -76,16 +78,17 @@ function Category() {
       <Column>
         <Container>
           <img
-            src="https://picsum.photos/640/480"
+            src={`${process.env.REACT_APP_API_ENDPOINT}${data?.categoryAndRelated?.imageUrl}`}
             className="w-full h-auto md:h-64"
             alt=""
           />
-          <Container spacing={Spacing.S}>
-            <H2>{data.categoryAndRelated.label}</H2>
-            <p>
-              Kortare intro-text om vad psykisk hälsa är - psykoedukation - som
-              också lockar användaren till att läsa mer.
-            </p>
+          <Container spacing={Spacing.M}>
+            <Column>
+              <Center>
+                <H2>{data.categoryAndRelated.label}</H2>
+              </Center>
+              <Strong>{data.categoryAndRelated.introduction}</Strong>
+            </Column>
           </Container>
         </Container>
         <Tabs>
@@ -122,31 +125,39 @@ function Category() {
             <Container>
               <TabPanel style={{ marginTop: "32px" }}>
                 <Accordion multiple className="text-left">
-                  {services.map((service) => {
-                    if (service) {
-                      return (
-                        <AccordionItem className="mb-4">
-                          <AccordionButton className="w-full px-6 py-2 text-left bg-beige-dark">
-                            <div className="flex">
-                              <span className="inline-block pr-1 text-sm font-thin uppercase">
-                                APP:
-                              </span>
-                              <div className="inline-block">
-                                <H4>{service.name}</H4>
-                              </div>
-                            </div>
-                          </AccordionButton>
-                          <AccordionPanel>{service.link}</AccordionPanel>
-                        </AccordionItem>
-                      );
-                    } else {
-                      return <React.Fragment />;
-                    }
-                  })}
+                  {services.length > 1 ? (
+                    services.map((service) => {
+                      if (service) {
+                        return (
+                          <AccordionItem className="mb-4">
+                            <AccordionButton className="w-full px-6 py-3 text-left bg-beige-dark">
+                              <Center>
+                                <span className="inline-block pr-1 text-sm font-normal tracking-wide text-gray-900 uppercase font-body">
+                                  App:
+                                </span>
+                                <div className="inline-block uppercase">
+                                  <H4>{service.name}</H4>
+                                </div>
+                              </Center>
+                            </AccordionButton>
+                            <AccordionPanel>{service.link}</AccordionPanel>
+                          </AccordionItem>
+                        );
+                      } else {
+                        return <React.Fragment />;
+                      }
+                    })
+                  ) : (
+                    <Container spacing={Spacing.S}>
+                      <p>Inga tjänster för denna kategori.</p>
+                    </Container>
+                  )}
                 </Accordion>
               </TabPanel>
               <TabPanel>
-                <p>Info</p>
+                <Container spacing={Spacing.M}>
+                  <Markdown text={data.categoryAndRelated.information} />
+                </Container>
               </TabPanel>
             </Container>
           </TabPanels>

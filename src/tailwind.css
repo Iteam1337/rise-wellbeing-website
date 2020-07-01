@@ -17343,21 +17343,25 @@ body,
 }
 
 body {
-  --bg-opacity: 1;
-  background-color: #F5F3EA;
-  background-color: rgba(245, 243, 234, var(--bg-opacity));
-  font-family: Heebo, sans-serif;
   font-size: 18px;
   line-height: 22px;
   --text-opacity: 1;
   color: #111111;
   color: rgba(17, 17, 17, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #F5F3EA;
+  background-color: rgba(245, 243, 234, var(--bg-opacity));
+  font-family: Heebo, sans-serif;
 }
 
 /* Custom Tailwind */
 
 .justify-self-center {
   justify-self: center;
+}
+
+.list-dp-icon {
+  background: url("./assets/list_style_icon.svg") no-repeat left top;
 }
 
 @media (min-width: 640px) {

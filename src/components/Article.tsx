@@ -16,6 +16,7 @@ export type ArticleProps = {
   text: string;
   title: string;
   url: string;
+  id: string;
   video?: string;
 };
 
@@ -35,7 +36,11 @@ const getAttachedAsset = (
     );
   } else if (maybeImage) {
     maybeAttachedAsset = (
-      <img className="w-full h-auto" src={maybeImage} alt="" />
+      <img
+        className="w-full h-auto"
+        src={`${process.env.REACT_APP_API_ENDPOINT}${maybeImage}`}
+        alt=""
+      />
     );
   } else {
     maybeAttachedAsset = <React.Fragment />;
