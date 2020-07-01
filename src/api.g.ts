@@ -17,7 +17,14 @@ export type Query = {
   _empty?: Maybe<Scalars['String']>;
   questions: Array<Question>;
   categories: Array<Category>;
+  categoryAndRelated?: Maybe<Category>;
   articles: Array<Article>;
+  services: Array<Service>;
+};
+
+
+export type QueryCategoryAndRelatedArgs = {
+  id: Scalars['String'];
 };
 
 export type Question = {
@@ -32,6 +39,15 @@ export type Category = {
   label: Scalars['String'];
   introduction: Scalars['String'];
   information: Scalars['String'];
+  services?: Maybe<Array<Maybe<Service>>>;
+};
+
+export type Service = {
+  __typename?: 'Service';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  link: Scalars['String'];
+  categories: Array<Category>;
 };
 
 export type Article = {
@@ -50,6 +66,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
   sendAnswers: Scalars['Boolean'];
+  latestAnswer?: Maybe<LatestAnswerResponse>;
   login: AuthPayload;
   register: AuthPayload;
 };
@@ -57,6 +74,11 @@ export type Mutation = {
 
 export type MutationSendAnswersArgs = {
   input: Answers;
+};
+
+
+export type MutationLatestAnswerArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -70,12 +92,19 @@ export type MutationRegisterArgs = {
 };
 
 export type Answers = {
-  Answers?: Maybe<Array<Maybe<Answer>>>;
+  answers?: Maybe<Array<Maybe<Answer>>>;
+  user: Scalars['String'];
 };
 
 export type Answer = {
-  id: Scalars['String'];
   text: Scalars['String'];
+  id: Scalars['String'];
+};
+
+export type LatestAnswerResponse = {
+  __typename?: 'latestAnswerResponse';
+  createdAt: Scalars['String'];
+  user: Scalars['String'];
 };
 
 export type UserInput = {
@@ -189,11 +218,13 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Question: ResolverTypeWrapper<Question>;
   Category: ResolverTypeWrapper<Category>;
+  Service: ResolverTypeWrapper<Service>;
   Article: ResolverTypeWrapper<Article>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Answers: Answers;
   Answer: Answer;
+  latestAnswerResponse: ResolverTypeWrapper<LatestAnswerResponse>;
   userInput: UserInput;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -209,11 +240,13 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Question: Question;
   Category: Category;
+  Service: Service;
   Article: Article;
   Mutation: {};
   Boolean: Scalars['Boolean'];
   Answers: Answers;
   Answer: Answer;
+  latestAnswerResponse: LatestAnswerResponse;
   userInput: UserInput;
   AuthPayload: AuthPayload;
   ID: Scalars['ID'];
@@ -226,7 +259,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   questions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  categoryAndRelated?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoryAndRelatedArgs, 'id'>>;
   articles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType>;
+  services?: Resolver<Array<ResolversTypes['Service']>, ParentType, ContextType>;
 };
 
 export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = {
@@ -240,6 +275,15 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   introduction?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   information?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  services?: Resolver<Maybe<Array<Maybe<ResolversTypes['Service']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type ServiceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Service'] = ResolversParentTypes['Service']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  link?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
@@ -258,8 +302,15 @@ export type ArticleResolvers<ContextType = any, ParentType extends ResolversPare
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sendAnswers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendAnswersArgs, 'input'>>;
+  latestAnswer?: Resolver<Maybe<ResolversTypes['latestAnswerResponse']>, ParentType, ContextType, RequireFields<MutationLatestAnswerArgs, 'id'>>;
   login?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
   register?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>;
+};
+
+export type LatestAnswerResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['latestAnswerResponse'] = ResolversParentTypes['latestAnswerResponse']> = {
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 };
 
 export type AuthPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
@@ -287,8 +338,10 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Question?: QuestionResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
+  Service?: ServiceResolvers<ContextType>;
   Article?: ArticleResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  latestAnswerResponse?: LatestAnswerResponseResolvers<ContextType>;
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   LogoutResponse?: LogoutResponseResolvers<ContextType>;

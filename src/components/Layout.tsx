@@ -120,7 +120,7 @@ export type RowProps = {
 
 export const Row = ({ rows = 2, children, gap = Spacing.S }: RowProps) => (
   <div
-    className={`grid grid-rows-${rows.toString()} ${gapToTailwindProps(gap)}`}
+    className={`grid grid-cols-${rows.toString()} ${gapToTailwindProps(gap)}`}
   >
     {children}
   </div>

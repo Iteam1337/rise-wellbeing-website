@@ -17,9 +17,9 @@ import {
   BackgroundColor,
 } from "../components/Layout";
 import { themeColors } from "../constants";
-// import { Query } from "./api.g";
-// import { CATEGORY_QUERY } from "./graphql/queries";
-// import { useQuery } from "@apollo/client";
+import { Query } from "../api.g";
+import { CATEGORY_QUERY } from "../graphql/queries";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 function TabWithSelectedHandling(props: any) {
@@ -52,12 +52,27 @@ function Category() {
 
   let { category } = useParams();
 
-  // const { loading, error, data } = useQuery<{
-  //   categories: Query["category"];
-  // }>(CATEGORY_QUERY);
+  const { loading, error, data } = useQuery<{
+    categoryAndRelated: Query["categoryAndRelated"];
+  }>(CATEGORY_QUERY, {
+    variables: {
+      id: category,
+    },
+  });
 
-  return (
-    <Wrapper backgroundColor={BackgroundColor.Beige}>
+  let elementToRender = null;
+
+  if (loading) {
+    elementToRender = <p>Loading...</p>;
+  }
+
+  if (error) {
+    elementToRender = <p>{error.message}</p>;
+  }
+
+  if (data && data.categoryAndRelated) {
+    const services = data?.categoryAndRelated?.services ?? [];
+    elementToRender = (
       <Column>
         <Container>
           <img
@@ -66,7 +81,7 @@ function Category() {
             alt=""
           />
           <Container spacing={Spacing.S}>
-            <H2>{category}</H2>
+            <H2>{data.categoryAndRelated.label}</H2>
             <p>
               Kortare intro-text om vad psykisk hälsa är - psykoedukation - som
               också lockar användaren till att läsa mer.
@@ -107,28 +122,27 @@ function Category() {
             <Container>
               <TabPanel style={{ marginTop: "32px" }}>
                 <Accordion multiple className="text-left">
-                  <AccordionItem className="mb-4">
-                    <AccordionButton className="w-full px-6 py-2 text-left bg-beige-dark">
-                      <H4>App</H4>
-                    </AccordionButton>
-                    <AccordionPanel>
-                      Integer ad iaculis semper aenean nibh quisque hac eget
-                      volutpat, at dui sem accumsan cras congue mi varius
-                      egestas interdum, molestie blandit sociosqu sodales diam
-                      metus erat venenatis.
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem className="mb-4">
-                    <AccordionButton className="w-full py-2 px-6 text-left bg-beige-dark">
-                      <H4>App two</H4>
-                    </AccordionButton>
-                    <AccordionPanel>
-                      Hendrerit faucibus litora justo aliquet inceptos gravida
-                      felis vel aenean, natoque fermentum nostra tempus ornare
-                      nam diam est, neque risus aliquam sapien vestibulum sociis
-                      integer eros.
-                    </AccordionPanel>
-                  </AccordionItem>
+                  {services.map((service) => {
+                    if (service) {
+                      return (
+                        <AccordionItem className="mb-4">
+                          <AccordionButton className="w-full px-6 py-2 text-left bg-beige-dark">
+                            <div className="flex">
+                              <span className="inline-block pr-1 text-sm font-thin uppercase">
+                                APP:
+                              </span>
+                              <div className="inline-block">
+                                <H4>{service.name}</H4>
+                              </div>
+                            </div>
+                          </AccordionButton>
+                          <AccordionPanel>{service.link}</AccordionPanel>
+                        </AccordionItem>
+                      );
+                    } else {
+                      return <React.Fragment />;
+                    }
+                  })}
                 </Accordion>
               </TabPanel>
               <TabPanel>
@@ -138,8 +152,18 @@ function Category() {
           </TabPanels>
         </Tabs>
       </Column>
-    </Wrapper>
-  );
+    );
+  }
+
+  if (elementToRender) {
+    return (
+      <Wrapper backgroundColor={BackgroundColor.Beige}>
+        {elementToRender}
+      </Wrapper>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default Category;

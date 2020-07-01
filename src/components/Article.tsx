@@ -23,7 +23,7 @@ const getAttachedAsset = (
   maybeImage?: string,
   maybeVideo?: string
 ): JSX.Element => {
-  let maybeAttachedAsset;
+  let maybeAttachedAsset: JSX.Element;
 
   /* Lets just prioritise video's over images */
   if (maybeVideo) {

@@ -43,13 +43,13 @@ function CategoriesFeed() {
               <Container key={category.label}>
                 <Center>
                   <Column gap={Spacing.XS}>
-                    <Link to={`/tema/${category.label}`}>
+                    <Link to={`/tema/${category.id}`}>
                       <img
                         src="https://picsum.photos/640/480"
                         alt={category.label}
                       />
                     </Link>
-                    <Link to={`/tema/${category.label}`}>
+                    <Link to={`/tema/${category.id}`}>
                       <H4>
                         <span className="uppercase">{category.label}</span>
                       </H4>
