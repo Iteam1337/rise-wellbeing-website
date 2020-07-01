@@ -12,6 +12,7 @@ const pluckNonValidProps = ({
   ...props
 }: any) => props;
 
+/* NOTE: See https://github.com/rexxars/react-markdown#node-types for a reference of the nodes */
 const markdownRenderer = {
   h1: H1,
   h2: H2,
