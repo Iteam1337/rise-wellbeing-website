@@ -104,6 +104,18 @@
               "deprecationReason": null
             },
             {
+              "name": "featuredArticle",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Article",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "articles",
               "description": "",
               "args": [],

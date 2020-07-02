@@ -31,6 +31,16 @@ export const CATEGORIES_QUERY = gql`
 
 export const ARTICLES_QUERY = gql`
   query Articles {
+    featuredArticle {
+      id
+      url
+      imgUrl
+      videoUrl
+      title
+      text
+      introduction
+    }
+
     articles {
       id
       url

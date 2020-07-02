@@ -1,6 +1,6 @@
 import React from "react";
 import { Markdown } from "./Markdown";
-import { H2 } from "./Typography";
+import { H2, Strong } from "./Typography";
 import { LinkButton } from "./Button";
 import {
   Column,
@@ -47,6 +47,39 @@ const getAttachedAsset = (
   }
 
   return maybeAttachedAsset;
+};
+
+export const FeaturedArticleThumbnail = ({
+  image,
+  introduction,
+  text,
+  title,
+  url,
+  video,
+}: ArticleProps & { introduction: string }) => {
+  return (
+    <Wrapper backgroundColor={BackgroundColor.Beige} spacing={Spacing.None}>
+      <Container>
+        <Column gap={Spacing.None}>
+          <Container spacing={Spacing.S}>
+            <Column gap={Spacing.M}>
+              <Center>
+                <H2>{title}</H2>
+              </Center>
+              <Strong>{introduction}</Strong>
+              <Markdown text={text} />
+            </Column>
+          </Container>
+          {getAttachedAsset(image, video)}
+          <Container spacing={Spacing.S}>
+            <Column>
+              <LinkButton to={url} text="Spela video" />
+            </Column>
+          </Container>
+        </Column>
+      </Container>
+    </Wrapper>
+  );
 };
 
 export const ArticleThumbnail = ({

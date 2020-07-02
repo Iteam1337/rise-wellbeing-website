@@ -129,7 +129,7 @@ function Category() {
                     services.map((service) => {
                       if (service) {
                         return (
-                          <AccordionItem className="mb-4">
+                          <AccordionItem key={service.id} className="mb-4">
                             <AccordionButton className="w-full px-6 py-3 text-left bg-beige-dark">
                               <Center>
                                 <span className="inline-block pr-1 text-sm font-normal tracking-wide text-gray-900 uppercase font-body">

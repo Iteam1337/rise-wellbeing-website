@@ -18,6 +18,7 @@ export type Query = {
   questions: Array<Question>;
   categories: Array<Category>;
   categoryAndRelated?: Maybe<Category>;
+  featuredArticle?: Maybe<Article>;
   articles: Array<Article>;
   article: Article;
   services: Array<Service>;
@@ -277,6 +278,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   questions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
   categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   categoryAndRelated?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoryAndRelatedArgs, 'id'>>;
+  featuredArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType>;
   articles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType>;
   article?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<QueryArticleArgs, 'id'>>;
   services?: Resolver<Array<ResolversTypes['Service']>, ParentType, ContextType>;

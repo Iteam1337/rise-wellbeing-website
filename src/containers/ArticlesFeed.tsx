@@ -3,10 +3,14 @@ import React from "react";
 import { Query, Article } from "../api.g";
 import { ARTICLES_QUERY } from "../graphql/queries";
 import { useQuery } from "@apollo/client";
-import { ArticleThumbnail } from "../components/Article";
+import {
+  ArticleThumbnail,
+  FeaturedArticleThumbnail,
+} from "../components/Article";
 
 function ArticlesFeed() {
   const { loading, error, data } = useQuery<{
+    featuredArticle: Query["featuredArticle"];
     articles: Query["articles"];
   }>(ARTICLES_QUERY);
 
@@ -22,25 +26,28 @@ function ArticlesFeed() {
 
   if (data) {
     /* TODO(@all): This should happen in the API */
-    const [welcomeArticle] = data.articles.filter((article) =>
-      article.title.startsWith("Välkommen")
-    );
+    const { featuredArticle, articles } = data;
 
-    const restOfArticles = data.articles.filter(
+    const restOfArticles = articles.filter(
       (article) => !article.title.startsWith("Välkommen")
     );
 
     elementToRender = (
       <>
-        <ArticleThumbnail
-          image={welcomeArticle.imgUrl}
-          key={welcomeArticle.id}
-          text={welcomeArticle.introduction}
-          title={welcomeArticle.title}
-          id={welcomeArticle.id}
-          url={`/artikel/${welcomeArticle.id}`}
-          video={welcomeArticle.videoUrl}
-        />
+        {featuredArticle ? (
+          <FeaturedArticleThumbnail
+            image={featuredArticle.imgUrl}
+            key={featuredArticle.id}
+            introduction={featuredArticle.introduction}
+            text={featuredArticle.text}
+            title={featuredArticle.title}
+            id={featuredArticle.id}
+            url={`/artikel/${featuredArticle.id}`}
+            video={featuredArticle.videoUrl}
+          />
+        ) : (
+          <React.Fragment />
+        )}
         {restOfArticles.map((article: Article) => (
           <ArticleThumbnail
             image={article.imgUrl}
